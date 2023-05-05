@@ -1,0 +1,171 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Class
+  labels:
+    app: Class
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Class
+  template:
+    metadata:
+      labels:
+        app: Class
+    spec:
+      containers:
+        - name: Class
+          image: username/Class:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Enrollment
+  labels:
+    app: Enrollment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Enrollment
+  template:
+    metadata:
+      labels:
+        app: Enrollment
+    spec:
+      containers:
+        - name: Enrollment
+          image: username/Enrollment:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Student
+  labels:
+    app: Student
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Student
+  template:
+    metadata:
+      labels:
+        app: Student
+    spec:
+      containers:
+        - name: Student
+          image: username/Student:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Class
+  labels:
+    app: Class
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Class
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Enrollment
+  labels:
+    app: Enrollment
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Enrollment
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Student
+  labels:
+    app: Student
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Student
+
